@@ -286,12 +286,27 @@ stage "Sign in to Claude on the box"
 say "Sign in through Claude's own browser flow. The kit never copies your token."
 remote -t bash -c 'command -v claude >/dev/null || { echo "Claude is missing from this template. Install it from https://code.claude.com/docs/en/setup, then rerun."; exit 1; }; env -u CLAUDE_CODE_OAUTH_TOKEN -u ANTHROPIC_API_KEY -u ANTHROPIC_AUTH_TOKEN claude auth status >/dev/null 2>&1 || env -u CLAUDE_CODE_OAUTH_TOKEN -u ANTHROPIC_API_KEY -u ANTHROPIC_AUTH_TOKEN claude auth login'
 
-stage "Register and verify the project"
+stage "Choose the code and issue repositories"
 ask REPO_URL "Project clone URL (https://github.com/owner/repo.git or git@github.com:owner/repo.git):"
 [[ "$REPO_URL" =~ ^(https://github\.com/|git@github\.com:)[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+$ ]] || { say 'Use a GitHub HTTPS or SSH clone URL.'; exit 1; }
 write_env REPO_URL "$REPO_URL"
 say "The box clones this repository into ~/dev/design-project. Your existing Git identity stays."
-remote -T bash -c 'bash "$HOME/dev/orchestration-kit/scripts/setup-box.sh" finish "$1"' kit "$REPO_URL"
+warn "Orchestration creates many issues. Do not use the public PostHog/posthog repo for design tickets."
+say "Choose a dedicated issue repository you own, preferably private. This is separate from the code clone."
+say "If you need a repository, create it on GitHub with Issues enabled."
+open_url "https://github.com/new"
+ask ISSUE_REPO "GitHub issue repository (owner/repo):"
+ISSUE_REPO=$(sh "$root/scripts/configure-issue-repo.sh" validate "$ISSUE_REPO")
+remote -T bash -c 'set -euo pipefail
+  gh repo view "$1" --json nameWithOwner,visibility,hasIssuesEnabled,viewerPermission | python3 -c '\''import json,sys
+repo=json.load(sys.stdin)
+if not repo["hasIssuesEnabled"]:
+    sys.exit("Enable Issues on the selected repository, then rerun the wizard.")
+if repo["viewerPermission"] not in ["ADMIN", "MAINTAIN", "WRITE", "TRIAGE"]:
+    sys.exit("Choose an issue repository you can manage, preferably your own private repo.")
+print(repo["nameWithOwner"] + " (" + repo["visibility"] + "): issues enabled and writable.")'\''' kit "$ISSUE_REPO"
+write_env ISSUE_REPO "$ISSUE_REPO"
+remote -T bash -c 'bash "$HOME/dev/orchestration-kit/scripts/setup-box.sh" finish "$1" "$2"' kit "$REPO_URL" "$ISSUE_REPO"
 
 stage "Pair T3 and check a remote session"
 open_url "https://t3.codes"

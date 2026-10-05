@@ -16,7 +16,7 @@ cd orchestration-devbox-kit
 bash setup.sh
 ```
 
-Or [download the packaged kit](https://github.com/Silthus/orchestration-devbox-kit/releases/download/v2026.10.05/orchestration-kit.tar.gz),
+Or [download the packaged kit](https://github.com/Silthus/orchestration-devbox-kit/releases/latest/download/orchestration-kit.tar.gz),
 extract it, and run `bash orchestration-kit/setup.sh`.
 
 Your PostHog Coder access, project GitHub access, Tailscale connection, and
@@ -36,11 +36,22 @@ the box with T3 on your workstation. Sign in to Claude once on the box.
 - Use your own Coder login and a GitHub account with access to your project.
   The box uses your existing Git credentials and identity. If HTTPS cloning
   needs authentication, run `gh auth login` on the box before rerunning.
+- Have a separate GitHub repository for design issues, preferably a private
+  repository you own, with Issues enabled. The wizard asks for `owner/repo`
+  separately from the code clone URL. Orchestration can create many issues.
+  It rejects `PostHog/posthog` as the issue destination so the public project
+  is not flooded with planning tickets.
 
 The wizard saves non-secret choices in
 `~/.config/orchestration-kit/setup.env`. Coder and Claude store their own
 credentials. Pairing links appear only in your terminal. Do not paste them
 into chat or commit them.
+
+The selected issue repository is saved as `ISSUE_REPO` and recorded in the
+code checkout's `docs/agents/issue-tracker.md`. A Claude rule also records
+the destination for every worktree of that code repository. Issue commands
+use an explicit repository; pull requests still belong to the code repo.
+Setup creates no issues and preserves an existing tracker configuration.
 
 ## What gets installed
 
@@ -85,9 +96,11 @@ decision, assumptions called out, alternatives compared, and open questions
 listed. Implementation is out of scope.
 
 First read the project instructions and configure the tracker with
-setup-matt-pocock-skills. Use the repository's shared issue tracker for a
-parallel map, or a local Markdown tracker with one ticket session at a time
-for a private trial. Ask me the decisions only I can make. Do independent
+setup-matt-pocock-skills only if none is configured. Use the issue repository
+selected in the wizard. Never create these design tickets in PostHog/posthog.
+Use the selected shared issue tracker for a parallel map. Switch to local
+Markdown only if I ask for a private trial with one ticket session at a time.
+Ask me the decisions only I can make. Do independent
 research in native subagents using the available Claude models.
 
 Then use orchestration-wayfinder to work through the map. Use bounded worker
@@ -139,6 +152,9 @@ access. A new pairing link can be generated on the box with
 ## Remove the kit
 
 Remove only the links that `sh install.sh plan` reports as `current`.
+If you also remove `~/.claude/rules/orchestration-issues.md`, first verify
+that it records this project's selected issue repository. Keep or remove
+the project's tracker document according to your project's instructions.
 Before removing the kit directory:
 
 1. Check `readlink ~/.config/fleet/linux-session.sh`. If it points into this

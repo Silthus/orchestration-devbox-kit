@@ -14,7 +14,13 @@ model the user explicitly requested.
 
 Start with `wayfinder` to chart the destination, decisions, dependencies,
 and unresolved questions. Use `setup-matt-pocock-skills` to configure the
-tracker. Use a shared issue tracker for parallel workers. A local Markdown
+tracker only when none is configured. Preserve the wizard's selected issue
+repository and always pass it explicitly to GitHub issue commands and REST
+operations. Keep code pull requests in the code repository. Orchestration
+creates many issues: use a dedicated issue repository and never put its
+design tickets in the public PostHog/posthog repository. If access fails,
+ask the user instead of falling back to the code repository.
+Use a shared issue tracker for parallel workers. A local Markdown
 tracker is suitable for a private trial with one ticket session at a time.
 Use `orchestration-wayfinder` when asked to drive the map. Read its runtime
 addendum and enforce its worker deadlines before dispatching.

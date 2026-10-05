@@ -29,6 +29,8 @@ case "${1:-}" in
     ;;
   finish)
     repo_url=${2:?Repository URL is required}
+    issue_repo=${3:?A separate issue repository is required}
+    issue_repo=$(sh "$root/scripts/configure-issue-repo.sh" validate "$issue_repo")
     case "$repo_url" in https://github.com/*/*|git@github.com:*/*) ;; *) echo 'Use a GitHub HTTPS or SSH clone URL.' >&2; exit 2 ;; esac
     project="$HOME/dev/design-project"
     if [ -e "$project" ] || [ -L "$project" ]; then
@@ -37,6 +39,7 @@ case "${1:-}" in
       mkdir -p "$HOME/dev"
       git clone -- "$repo_url" "$project"
     fi
+    sh "$root/scripts/configure-issue-repo.sh" install "$project" "$issue_repo"
     sh "$root/scripts/t3-headless.sh" install
     sh "$root/scripts/register-project.sh" "$project"
     service_path=$(systemctl --user show t3code.service --property=Environment --value | python3 -c 'import shlex,sys; env=dict(item.split("=",1) for item in shlex.split(sys.stdin.read()) if "=" in item); print(env["PATH"])')
@@ -48,5 +51,5 @@ case "${1:-}" in
       'Reply with exactly: Claude is ready on this devbox.'
     sh "$root/scripts/t3-headless.sh" doctor
     ;;
-  *) echo 'Usage: setup-box.sh prepare|finish <repository-url>' >&2; exit 2 ;;
+  *) echo 'Usage: setup-box.sh prepare|finish <code-repository-url> <issue-owner/repo>' >&2; exit 2 ;;
 esac
