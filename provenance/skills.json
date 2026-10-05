@@ -1,0 +1,398 @@
+{
+  "version": 1,
+  "importedAt": "2026-10-05",
+  "hashFormat": "SHA-256 of sorted files: relative POSIX path + NUL + executable marker (x or -) + NUL + file bytes + NUL.",
+  "sources": [
+    {
+      "id": "mattpocock",
+      "url": "https://github.com/mattpocock/skills.git",
+      "version": "1.2.3",
+      "revision": "3cca18b368ae95cdbdebbff572ccafa662551015",
+      "licensePath": "LICENSE",
+      "licenseFile": "provenance/licenses/mattpocock.txt"
+    },
+    {
+      "id": "pstack",
+      "url": "https://github.com/cursor/plugins.git",
+      "revision": "e43c7ee26e0038c6c1fa8380dd34ce86ff94cb2a",
+      "licensePath": "pstack/LICENSE",
+      "licenseFile": "provenance/licenses/pstack.txt"
+    },
+    {
+      "id": "openclaw",
+      "url": "https://github.com/openclaw/agent-skills.git",
+      "revision": "3d3034af58d4c0a137b8ffe42b4c190fcd5bdd38",
+      "licensePath": "LICENSE",
+      "licenseFile": "provenance/licenses/openclaw.txt"
+    },
+    {
+      "id": "agent-browser",
+      "url": "https://github.com/vercel-labs/agent-browser.git",
+      "revision": "39a74c70d7759d5a6de7a22c04570bb626bbd081",
+      "licensePath": "LICENSE",
+      "licenseFile": "provenance/licenses/agent-browser.txt",
+      "version": "0.38.2",
+      "tag": "v0.38.2"
+    },
+    {
+      "id": "lonir",
+      "kind": "local-snapshot",
+      "license": "Private user-owned source. No upstream license file.",
+      "origin": "Lonir .agents/skills",
+      "revision": "8b7eecf3830fc03a2e460685d02b9da0b19c95c1"
+    },
+    {
+      "id": "personal",
+      "kind": "owned",
+      "license": "Private user-owned source.",
+      "origin": "Existing shared skill directory"
+    }
+  ],
+  "skills": [
+    {
+      "name": "agent-browser",
+      "path": "home/.agents/skills/agent-browser",
+      "source": "agent-browser",
+      "sourcePath": "skills/agent-browser",
+      "sha256": "58bfb55e096049a723e663dc02642393128221608388a019c3dacc98228ff30e",
+      "runtimeDependencies": [
+        {
+          "command": "node",
+          "version": ">=24.0.0",
+          "purpose": "CLI launcher and installation"
+        },
+        {
+          "command": "agent-browser",
+          "version": "0.38.2",
+          "purpose": "Matching CLI serves usage content; install Chromium with agent-browser install"
+        }
+      ],
+      "limitations": [
+        "Upstream skill is a discovery stub with hidden: true. Load usage with agent-browser skills get core. Upstream npm examples are preserved; use Bun or PNPM instead."
+      ]
+    },
+    {
+      "name": "batch-grill-me",
+      "path": "home/.agents/skills/batch-grill-me",
+      "source": "lonir",
+      "sourcePath": ".agents/skills/batch-grill-me",
+      "sha256": "a125bed92ebcb2bf3d5f337f5c3b65d1bfbe7525d1a8d2c96045c1c7cef7b661",
+      "reason": "Required by the selected orchestration-wayfinder skill at this revision."
+    },
+    {
+      "name": "code-review",
+      "path": "home/.agents/skills/code-review",
+      "source": "mattpocock",
+      "sourcePath": "skills/engineering/code-review",
+      "sha256": "463b8e708ba3340edc50573b7b420b37f784ae6919be4215a20aaa658d63170b"
+    },
+    {
+      "name": "codebase-design",
+      "path": "home/.agents/skills/codebase-design",
+      "source": "mattpocock",
+      "sourcePath": "skills/engineering/codebase-design",
+      "sha256": "6b32c672cec7949a258cf9bb779207e4ce364f4e5fd89ce1d3b5da8c22bd54d1"
+    },
+    {
+      "name": "domain-modeling",
+      "path": "home/.agents/skills/domain-modeling",
+      "source": "mattpocock",
+      "sourcePath": "skills/engineering/domain-modeling",
+      "sha256": "b10165bbe1a3d5f4b20ec962b717193822731e9e05148c691d91d12f62c118b1"
+    },
+    {
+      "name": "grill-with-docs",
+      "path": "home/.agents/skills/grill-with-docs",
+      "source": "mattpocock",
+      "sourcePath": "skills/engineering/grill-with-docs",
+      "sha256": "aee13194585b7bd07bb76dfbf63bdf625ebbbac18ce0a2c0e79ac606865227f7"
+    },
+    {
+      "name": "grilling",
+      "path": "home/.agents/skills/grilling",
+      "source": "mattpocock",
+      "sourcePath": "skills/productivity/grilling",
+      "sha256": "d96876fe83d399ec3160b08101809f07ddf852362b60382a8f3f60131b50af0c"
+    },
+    {
+      "name": "handoff",
+      "path": "home/.agents/skills/handoff",
+      "source": "mattpocock",
+      "sourcePath": "skills/productivity/handoff",
+      "sha256": "f1705c6183ec40cb1deff83c366b6f83820d656d3c3bd3ea2e807f94b9dae542",
+      "dependencies": [
+        "t3-kickoff"
+      ],
+      "localPatches": [
+        "2026-10-03: Made the skill model-invoked, extended its description to handoffs to another machine, allowed implicit invocation in agents/openai.yaml, and added REMOTE.md with a pointer from SKILL.md. A remote handoff pushes the branch, starts a T3 thread on the target machine with `kickoff handoff`, and archives the old thread when its turn ends. Reason: Michael moves work between his devboxes by saying \"hand this off to devbox 1\" and wants the new thread in his T3 sidebar."
+      ]
+    },
+    {
+      "name": "how",
+      "path": "home/.agents/skills/how",
+      "source": "pstack",
+      "sourcePath": "pstack/skills/how",
+      "sha256": "09c056dd1e223829d33a05770a74af1f9c9b69fae633978c8792fdb9810e7d47",
+      "limitations": [
+        "Upstream uses Cursor tool, model, and transcript conventions. Codex and Claude Code runtime adaptation is not verified."
+      ],
+      "localPatches": [
+        "2026-10-03: Route Claude model selection through home/.agents/AGENTS.md instead of fixed Fable defaults. Reason: Michael chooses models explicitly or by task complexity.",
+        "2026-10-03: Choose explorers with the shared worker policy and inherit the conversation model for explainers. Reason: Michael separates the chosen conversation companion from workers, prefers Sol for bounded work, and limits the Opus/Fable defaults to UI work."
+      ],
+      "revision": "c5db7fef1f1b1ebb2d4b7ae0308bf4beb10cb4c1"
+    },
+    {
+      "name": "implement",
+      "path": "home/.agents/skills/implement",
+      "source": "mattpocock",
+      "sourcePath": "skills/engineering/implement",
+      "sha256": "3b89dc72eb38577e57e551ef8abf69083aca343efb58da225697c9158f43cc82"
+    },
+    {
+      "name": "improve-codebase-architecture",
+      "path": "home/.agents/skills/improve-codebase-architecture",
+      "source": "mattpocock",
+      "sourcePath": "skills/engineering/improve-codebase-architecture",
+      "sha256": "5df1352904ef5db45023885151ee194866d39e1e21c0e541039990eb82fbce6e"
+    },
+    {
+      "name": "leaving-pr-comments",
+      "path": "home/.agents/skills/leaving-pr-comments",
+      "source": "personal",
+      "sourcePath": "home/.agents/skills/leaving-pr-comments",
+      "sha256": "bf1eb4497af5ea7b0e606786d615fb4a4278e297de0ea8a09483ff5368907db5"
+    },
+    {
+      "name": "orchestration-wayfinder",
+      "path": "home/.agents/skills/orchestration-wayfinder",
+      "source": "lonir",
+      "sourcePath": ".agents/skills/orchestration-wayfinder",
+      "sha256": "489dab62afb4b6edb198fbdca9b91eaa1b8bdef539e5759b5c13e5329b8ce4ea",
+      "dependencies": [
+        "wayfinder",
+        "batch-grill-me",
+        "domain-modeling",
+        "prototype",
+        "to-spec",
+        "to-tickets",
+        "research",
+        "implement",
+        "tdd",
+        "t3-kickoff",
+        "qa-swarm"
+      ],
+      "limitations": [
+        "Codex and Claude Code runtime addenda require matching task, deadline, and GitHub tracker facilities. No Cursor addendum exists. The workflow has explicit merge authority when invoked; installation does not invoke it."
+      ],
+      "localPatches": [
+        "2026-10-01: Added T3.md and pointers to it from SKILL.md, CLAUDE.md, and CODEX.md. Inside T3 Code, grilling and prototype tickets get their own T3 thread in the sidebar, cast natively (UI prototypes on claude-fable-5-1), watched by one t3-kickoff waiter per thread, and archived after the ticket closes. Reason: Michael works HITL tickets by switching threads in T3 Code while the conductor keeps the frontier moving.",
+        "2026-10-02: Implementation tickets now ship as a draft pull request that the qa-swarm skill hands off as ready for review, instead of a merged commit; the map's Notes can grant merge authority. A dependent implementation ticket stacks on its blocker's pull request branch. qa-swarm replaces the single adversarial reviewer, and its Fable 5.1 and GPT-6.1 Sol lanes are exempt from the retired-cast rule. Reason: Michael wants near-full autonomy, reviews every pull request himself before it merges.",
+        "2026-10-03: Removed the Opus worker default, Anthropic-only casting, strongest-model fallback, and Fable UI prototype choice. Worker models and reasoning now use runtime defaults unless the user requests an override; T3 threads explicitly carry the conductor's provider and model to avoid CLI fallback choices. Reason: Michael wants Wayfinder to respect session model choices without forcing expensive models or limiting research fan-out.",
+        "2026-10-03: Restored Fable 5.1 as the sole fixed worker model for all UI work, including prototypes, implementation, and nested UI workers. T3 UI threads select the provider offering claude-fable-5-1; other work keeps runtime defaults. Unavailable Fable dispatch records a blocker instead of substituting another model. Reason: Michael wants Fable 5.1 fixed for UI work without restoring expensive defaults elsewhere or limiting research fan-out.",
+        "2026-10-03: Route Claude model selection through home/.agents/AGENTS.md instead of fixed Fable defaults. Reason: Michael chooses models explicitly or by task complexity.",
+        "2026-10-05: In T3.md, an architecture prototype parks with its first round of open decision cards as the pending question, and each round of answers is feedback. Reason: the architecture brief is shaped in decision rounds, not one question.",
+        "2026-10-05: Implementation tickets ship as a reviewed draft pull request: one review from the other model family, or qa-swarm where AGENTS.md calls for it. A park stays parked until the human answers, and the conductor never re-dispatches a worker to keep reviewing. Follow-up work goes to the ticket's existing worker. Reason: qa-swarm on every ticket, and workers re-dispatched past its round cap, spent most of a week's Claude and GPT quota in a day."
+      ],
+      "revision": "8b7eecf3830fc03a2e460685d02b9da0b19c95c1"
+    },
+    {
+      "name": "principle-encode-lessons-in-structure",
+      "path": "home/.agents/skills/principle-encode-lessons-in-structure",
+      "source": "pstack",
+      "sourcePath": "pstack/skills/principle-encode-lessons-in-structure",
+      "sha256": "516b1656f037e53d5a1a4c08d52f2bb92759b527bebff5ce8635866523e22fc7"
+    },
+    {
+      "name": "prototype",
+      "path": "home/.agents/skills/prototype",
+      "source": "mattpocock",
+      "sourcePath": "skills/engineering/prototype",
+      "sha256": "702c0536a8ec9b4e737adee05d07bc7e504d7e0df9cf8243db3f82577cb6c89b",
+      "localPatches": [
+        "2026-10-03: Route Claude model selection through home/.agents/AGENTS.md instead of fixed Fable defaults. Reason: Michael chooses models explicitly or by task complexity.",
+        "2026-10-05: Added ARCHITECTURE.md, a third branch for the question \"what shape should the system take?\". It builds one HTML architecture brief (change map, contracts at each seam, flows, data, caching and performance, blast radius) grounded in real file:line links, with decision cards the user locks in batch-grill-me rounds, published through share-preview. Reason: Michael wants to shape larger backend and architecture changes the way UI prototypes let him shape screens, instead of the model deciding alone."
+      ],
+      "revision": "3cca18b368ae95cdbdebbff572ccafa662551015"
+    },
+    {
+      "name": "merge-risk",
+      "path": "home/.agents/skills/merge-risk",
+      "source": "personal",
+      "sourcePath": "home/.agents/skills/merge-risk",
+      "sha256": "2fe0f13b573d34efab419fddf406c7664f91d675d9c47a3268eb21e41b0856cc"
+    },
+    {
+      "name": "qa-swarm",
+      "path": "home/.agents/skills/qa-swarm",
+      "source": "personal",
+      "sourcePath": "home/.agents/skills/qa-swarm",
+      "sha256": "6c3089dd12b15cee6bee25d97580bc40ab3e7c2dad2e074bf629e6dbb919fbda",
+      "dependencies": [
+        "leaving-pr-comments",
+        "tdd",
+        "code-review",
+        "writing-voice",
+        "agent-browser",
+        "merge-risk"
+      ],
+      "runtimeDependencies": [
+        {
+          "command": "gh",
+          "purpose": "Draft PR, review threads, and checks"
+        },
+        {
+          "command": "node",
+          "purpose": "Codex companion script for the GPT lane in Claude Code"
+        },
+        {
+          "command": "claude",
+          "purpose": "Claude lane when Codex drives"
+        }
+      ],
+      "limitations": [
+        "The GPT lane in Claude Code needs the Codex plugin. The Claude lane in Codex needs the claude CLI with Fable access. No Cursor lane mapping exists."
+      ]
+    },
+    {
+      "name": "research",
+      "path": "home/.agents/skills/research",
+      "source": "mattpocock",
+      "sourcePath": "skills/engineering/research",
+      "sha256": "2ae3681434236ebd23f4215dd6410e1d632c76857f5fdc5881556d629a7238c1"
+    },
+    {
+      "name": "setup-matt-pocock-skills",
+      "path": "home/.agents/skills/setup-matt-pocock-skills",
+      "source": "mattpocock",
+      "sourcePath": "skills/engineering/setup-matt-pocock-skills",
+      "sha256": "8041a1787006666608b71b40a1fe3cc1b3a65ec9b0afffb5747da9e231c635a0"
+    },
+    {
+      "name": "share-preview",
+      "path": "home/.agents/skills/share-preview",
+      "source": "personal",
+      "sourcePath": "home/.agents/skills/share-preview",
+      "sha256": "c244980b40fd64069e8bed20e1d44b203cae1f58da861432efb84c9f12ab5a25",
+      "limitations": [
+        "Needs a Linux devbox on the tailnet with Tailscale Serve, set up by ./fleet t3-headless install."
+      ]
+    },
+    {
+      "name": "show-me-your-work",
+      "path": "home/.agents/skills/show-me-your-work",
+      "source": "pstack",
+      "sourcePath": "pstack/skills/show-me-your-work",
+      "sha256": "1be1585abf387152421b6a22ded60e4a11f032b9ed3ff07bfe3fd7851f7992fe",
+      "limitations": [
+        "Upstream uses Cursor tool, model, and transcript conventions. Codex and Claude Code runtime adaptation is not verified."
+      ],
+      "dependencies": [
+        "principle-encode-lessons-in-structure"
+      ]
+    },
+    {
+      "name": "t3-kickoff",
+      "path": "home/.agents/skills/t3-kickoff",
+      "source": "personal",
+      "sourcePath": "home/.agents/skills/t3-kickoff",
+      "sha256": "543b4c495f16cb530968024134368d77f014cd03542298bc63b442508f956784",
+      "runtimeDependencies": [
+        {
+          "command": "bun",
+          "purpose": "Kickoff script"
+        }
+      ],
+      "limitations": [
+        "Needs a running T3 Code server on the same machine: the desktop app on a Mac, or `t3 serve` on Linux. Its binary issues the bearer session."
+      ],
+      "localPatches": [
+        "2026-10-03: Find the desktop server entry behind Electron preload flags and reject unrecognized desktop commands. Reason: compile-cache preloads caused auth commands to launch a second app instead of the server CLI."
+      ]
+    },
+    {
+      "name": "tdd",
+      "path": "home/.agents/skills/tdd",
+      "source": "mattpocock",
+      "sourcePath": "skills/engineering/tdd",
+      "sha256": "d543481914fe36ea09ea107a49c5302de70355aa4e5decd1f7fccb2acc7d69f8"
+    },
+    {
+      "name": "to-spec",
+      "path": "home/.agents/skills/to-spec",
+      "source": "mattpocock",
+      "sourcePath": "skills/engineering/to-spec",
+      "sha256": "fcc301c3e0cf44b5b05170ef3b275e674c63056157f484cdab6dac6904fcdb9b"
+    },
+    {
+      "name": "to-tickets",
+      "path": "home/.agents/skills/to-tickets",
+      "source": "mattpocock",
+      "sourcePath": "skills/engineering/to-tickets",
+      "sha256": "30d6675bf7c529deef255e9fce778d4f98915a4eaeb700bad98cb4d258a54ac7"
+    },
+    {
+      "name": "triage",
+      "path": "home/.agents/skills/triage",
+      "source": "mattpocock",
+      "sourcePath": "skills/engineering/triage",
+      "sha256": "e6752011d719b420357b516423cec0a9d9b1705b099dcd159d69be9dd5f47f8a"
+    },
+    {
+      "name": "unslop",
+      "path": "home/.agents/skills/unslop",
+      "source": "pstack",
+      "sourcePath": "pstack/skills/unslop",
+      "sha256": "7627bfac8be1a0448d4d769cfe908f5930413de139cb6e802b2042055969ffd1",
+      "limitations": [
+        "Upstream uses Cursor tool, model, and transcript conventions. Codex and Claude Code runtime adaptation is not verified."
+      ]
+    },
+    {
+      "name": "wayfinder",
+      "path": "home/.agents/skills/wayfinder",
+      "source": "mattpocock",
+      "sourcePath": "skills/engineering/wayfinder",
+      "sha256": "95f4fcc087c7f1c67f43d0cd282d4fd68a7d9db52cd3dd42957990542ba961f7",
+      "localPatches": [
+        "2026-10-05: The Prototype ticket type also covers \"how should the system be shaped\" with an architecture brief, and charting adds an architecture prototype ticket that blocks the spec or implementation tickets when the destination changes contracts between modules, the data model, or caching and performance. Reason: Michael wants to stay in the driver's seat for larger architectural changes.",
+        "2026-10-05: Grilling stays the default for every open decision. Map Notes may waive it only when the human says so for that map, quoted with the date; a waiver from another map, a memory, or an earlier session does not carry over. Reason: an agent memory turned one map's request into a standing no-grilling rule that agents copied into every later map's Notes."
+      ]
+    },
+    {
+      "name": "why",
+      "path": "home/.agents/skills/why",
+      "source": "pstack",
+      "sourcePath": "pstack/skills/why",
+      "sha256": "8cacc343ff344df2a92b9a04e43edb15e0a619fd88d347c78dc3b1f9f2807cf2",
+      "limitations": [
+        "Upstream uses Cursor tool, model, and transcript conventions. Codex and Claude Code runtime adaptation is not verified."
+      ],
+      "localPatches": [
+        "2026-10-03: Route Claude model selection through home/.agents/AGENTS.md instead of fixed Fable defaults. Reason: Michael chooses models explicitly or by task complexity.",
+        "2026-10-03: Choose investigators with the shared worker policy and inherit the conversation model for synthesis. Reason: Michael separates the chosen conversation companion from workers, prefers Sol for bounded work, and limits the Opus/Fable defaults to UI work."
+      ],
+      "revision": "c5db7fef1f1b1ebb2d4b7ae0308bf4beb10cb4c1"
+    },
+    {
+      "name": "writing-for-agents",
+      "path": "home/.agents/skills/writing-for-agents",
+      "source": "mattpocock",
+      "sourcePath": "skills/productivity/writing-for-agents",
+      "sha256": "53b33dd1261200e55d78b9ca5592994b55154b1aef46a5ad79c028d91ed12146"
+    },
+    {
+      "name": "writing-voice",
+      "path": "home/.agents/skills/writing-voice",
+      "source": "personal",
+      "sourcePath": "home/.agents/skills/writing-voice",
+      "sha256": "80cbfe03c8493e36751006d762f56cda9d82f1e399ca7ca4cc50c6936712b93a"
+    }
+  ],
+  "portablePatches": [
+    "Personal agent instructions replaced with recipient-neutral rules. Git identity, hub authorization, providers, proxy, machine inventory, and pruning are excluded.",
+    "Single-Claude pilot uses an independent read-only Claude review when a second provider is unavailable; production repositories retain their own review requirements.",
+    "QA panel uses available Claude workers. Skill prose refers to the recipient, writing-voice uses a neutral guide, and remote handoff uses their SSH aliases. Fixtures retain example repository names.",
+    "share-preview uses native T3 preview and Tailscale Serve instead of requiring the Fleet CLI. Copied route-guard error messages name its standalone script."
+  ]
+}
